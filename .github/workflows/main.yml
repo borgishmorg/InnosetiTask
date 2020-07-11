@@ -24,6 +24,8 @@ jobs:
 
     - name: Create docker image
       run: |
+        echo $USER
+        newgrp docker 
         cd app
         docker build -t calc_app .
     
