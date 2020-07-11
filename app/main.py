@@ -5,8 +5,11 @@ import decimal
 t = tariff.Tariff()
 
 def calc_handler(request):
-    params = request.json
-    
+    try:
+        params = request.json if request.json is not None else dict()
+    except SystemError:
+        return request.Response(json={'error': 'Please specify a valid body'})
+        
     try:
         date = params['date']
         cargo_type = params['cargo_type']

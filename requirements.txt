@@ -1,1 +1,3 @@
 japronto
+pytest
+requests
