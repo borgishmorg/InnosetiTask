@@ -9,7 +9,7 @@ def test_test():
     'label, test', 
     zip(list(map(lambda x: x['label'], tests.TESTS)), 
     tests.TESTS))
-def test_all(label, test):
+def test_all(label, test, ip):
     if 'json' in test:
         r = requests.get(f'http://{ip}:8080/calc', json=test['json'])
     else:

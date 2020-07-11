@@ -6,5 +6,5 @@ def pytest_addoption(parser):
 
 
 @pytest.fixture
-def port(request):
+def ip(request):
     return request.config.getoption("--ip")
