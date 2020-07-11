@@ -1,6 +1,7 @@
 import japronto
 import tariff
 import decimal
+import datetime
 
 t = tariff.Tariff()
 
@@ -11,7 +12,7 @@ def calc_handler(request):
         return request.Response(json={'error': 'Please specify a valid body'})
         
     try:
-        date = params['date']
+        date = datetime.date.fromisoformat(params['date'])
         cargo_type = params['cargo_type']
         declared_price = decimal.Decimal(params['declared_price'])
     except KeyError as e:
