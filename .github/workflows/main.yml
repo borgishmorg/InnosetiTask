@@ -23,6 +23,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Create test network
       run: docker network create calc-test-net || true
+    - name: Remove old test app docker container (if exist)
+      run: docker container rm calc_test_app --force || true
     - name: Run test app docker container
       run: docker run -d --name calc_test_app --network calc-test-net calc_app_test_img
 
