@@ -6,4 +6,4 @@ WORKDIR /code
 COPY . /code/
 RUN pip install -r requirements.txt
 
-CMD ["pytest"]
+CMD ["pytest", "--ip calc_app_test"]

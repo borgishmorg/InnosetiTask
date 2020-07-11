@@ -22,7 +22,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Create test network
-      run: docker network create calc-test-net || true
+      run: docker network create --driver bridge calc-test-net || true
     - name: Remove old test app docker container (if exist)
       run: docker container rm calc_test_app --force || true
     - name: Run test app docker container
