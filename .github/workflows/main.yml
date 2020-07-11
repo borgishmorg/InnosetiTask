@@ -16,7 +16,7 @@ jobs:
     - name: Create pytest docker image
       run: docker build -t calc_app_pytest_img test/.
 
-  test:
+  run-test-app:
     needs: build-test
     runs-on: self-hosted
     steps:
@@ -25,13 +25,25 @@ jobs:
       run: docker network create calc-test-net || true
     - name: Run test app docker container
       run: docker run -d --name calc_test_app --network calc-test-net calc_app_test_img
+
+  test:
+    needs: run-test-app
+    runs-on: self-hosted
+    steps:
+    - uses: actions/checkout@v2
     - name: Run pytest docker container
       run: docker run --rm --name calc_app_pytest --network calc-test-net calc_app_pytest_img
+
+  stop-test-app:
+    needs: test
+    runs-on: self-hosted
+    steps:
+    - uses: actions/checkout@v2
     - name: Remove old test app docker container
       run: docker container rm calc_test_app --force
     - name: Create test network
       run: docker network rm calc-test-net
-    
+
 #  build:
 #    needs: test
 #    runs-on: self-hosted
