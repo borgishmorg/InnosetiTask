@@ -17,7 +17,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Move to app folder
-      run: cd app
+      run: cd ./app
 
     - name: test
       run: |
