@@ -25,6 +25,8 @@ def calc_handler(request):
 def error_handler(request, exception):
     return request.Response(json={'error': exception.__str__()})
 
+# docker build -t calc_app .
+# docker run --rm -l calc_app -p 8080:8080 calc_app
 
 if __name__ == '__main__':
     app = japronto.Application()
