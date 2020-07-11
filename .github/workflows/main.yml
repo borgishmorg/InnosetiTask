@@ -19,6 +19,11 @@ jobs:
     - name: Move to app folder
       run: cd app
 
+    - name: test
+      run: |
+        ls
+        pwd
+
     - name: Create docker image
       run: docker build -t calc_app_img .
 
