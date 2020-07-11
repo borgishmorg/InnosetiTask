@@ -23,7 +23,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Create docker image
-      run: /
+      run: |
         cd app
         docker build -t calc_app .
     
