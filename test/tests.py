@@ -8,6 +8,16 @@ TESTS = [
         'value': 'Please specify a \'date\''
     },
     {
+        'label': 'date wrong format test',
+        'json': {
+            'date': '2020-01',
+            'cargo_type': 'Glass',
+            'declared_price': '68923'
+        },
+        'key': 'error',
+        'value': 'Please specify a valid date'
+    },
+    {
         'label': 'cargo_type is not specified test',
         'json': {
             'date': '2020-07-01'
