@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build-test:
+  build:
     runs-on: self-hosted
     steps:
     - uses: actions/checkout@v2
@@ -16,43 +16,20 @@ jobs:
     - name: Create pytest docker image
       run: docker build -t calc_app_pytest_img test/.
 
-  run-test-app:
-    needs: build-test
+  test:
+    needs: build
     runs-on: self-hosted
     steps:
     - uses: actions/checkout@v2
     - name: Create test network
       run: docker network create --driver bridge calc-test-net || true
-    - name: Remove old test app docker container (if exist)
-      run: docker container rm calc_test_app --force || true
-    - name: Run test app docker container
-      run: docker run -d --name calc_test_app --network calc-test-net calc_app_test_img
-
-  test:
-    needs: run-test-app
-    runs-on: self-hosted
-    steps:
-    - uses: actions/checkout@v2
-    - name: Run pytest docker container
-      run: docker run --rm --name calc_app_pytest --network calc-test-net calc_app_pytest_img
-
-  stop-test-app:
-    needs: test
-    runs-on: self-hosted
-    steps:
-    - uses: actions/checkout@v2
-    - name: Remove old test app docker container
-      run: docker container rm calc_test_app --force
-    - name: Create test network
-      run: docker network rm calc-test-net
-
-#  build:
-#    needs: test
-#    runs-on: self-hosted
-#    steps:
-#    - uses: actions/checkout@v2
-#     - name: Create app docker image
-#       run: docker build -t calc_app_img app/.
+    - name: Run test app and pytest docker image
+      run: |
+        docker container rm calc_test_app --force || true
+        docker run -d --name calc_test_app --network calc-test-net calc_app_test_img
+        docker run --rm --name calc_app_pytest --network calc-test-net calc_app_pytest_img
+    - name: Remove test network and old test app docker container
+      run: docker container rm --force calc_test_app
 
   deploy:
     needs: test
@@ -63,7 +40,7 @@ jobs:
       run: |
         docker tag calc_app_test_img calc_app_img
         docker rmi calc_app_test_img
-    - name: Remove old app docker container
-      run: docker container rm calc_app --force || true
     - name: Run app docker container
-      run: docker run --rm -d --name calc_app -p 8080:8080 calc_app_img
+      run: |
+        docker container rm calc_app --force || true
+        docker run --rm -d --name calc_app -p 8080:8080 calc_app_img
