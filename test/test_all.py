@@ -11,9 +11,9 @@ def test_test():
     tests.TESTS))
 def test_all(label, test, ip):
     if 'json' in test:
-        r = requests.get(f'http://{ip}:8080/calc', json=test['json'])
+        r = requests.post(f'http://{ip}:8080/calc', json=test['json'])
     else:
-        r = requests.get(f'http://{ip}:8080/calc')
+        r = requests.post(f'http://{ip}:8080/calc')
     
     assert r.status_code == 200
     if 'key' in test:

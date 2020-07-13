@@ -1,12 +1,8 @@
 import japronto
-from handlers import calc_handler, error_handler
-from request_error import RequestError
+from calc_handler import calc_handler
 
 
 if __name__ == '__main__':
     app = japronto.Application()
-    
-    app.router.add_route('/calc', calc_handler, "GET")
-    app.add_error_handler(RequestError, error_handler)
-    
-    app.run()
+    app.router.add_route('/calc', calc_handler, "POST")
+    app.run(worker_num=4)

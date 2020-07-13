@@ -43,4 +43,4 @@ jobs:
     - name: Run app docker container
       run: |
         docker container rm calc_app --force || true
-        docker run --rm -d --name calc_app -p 8080:8080 calc_app_img
+        docker run --rm -d --name calc_app --network host -p 8080:8080 calc_app_img

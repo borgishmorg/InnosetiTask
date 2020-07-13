@@ -1,10 +1,13 @@
 import json
 import decimal
 import datetime
-from request_error import RequestError
 
 
 TARIFF_PATH = 'tariff.json'
+
+
+class TariffError(Exception):
+    pass
 
 
 class Tariff:
@@ -32,10 +35,10 @@ class Tariff:
             tariff_date = d
         
         if tariff_date is None:
-            raise RequestError('Please specify a valid date')
+            raise TariffError('Please specify a valid date')
         
         try:
             return self.tariff[tariff_date][cargo_type]
         except KeyError:
-            raise RequestError('Please specify a valid cargo type')
+            raise TariffError('Please specify a valid cargo type')
         

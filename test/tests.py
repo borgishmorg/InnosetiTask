@@ -4,6 +4,10 @@ TESTS = [
     },
     {
         'label': 'date is not specified test',
+        'json': {
+            'cargo_type': 'Glass',
+            'declared_price': '1000'
+        },
         'key': 'error',
         'value': 'Please specify a \'date\''
     },
@@ -33,6 +37,16 @@ TESTS = [
         },
         'key': 'error',
         'value': 'Please specify a \'declared_price\''
+    },
+    {
+        'label': 'declared_price wrong type test test',
+        'json': {
+            'date': '2020-07-01',
+            'cargo_type': 'Glass',
+            'declared_price': {'x': 'xxx'}
+        },
+        'key': 'error',
+        'value': 'Please specify a valid declared_price'
     },
     {
         'label': '2020-06-01 Glass 1000 test',
