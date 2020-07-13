@@ -3,7 +3,10 @@ import datetime
 import os
 
 
-IP = 'localhost'
+if 'TEST_CALC_APP' in os.environ:
+    IP = 'calc_test_mongo'
+else:
+    IP = 'localhost'
 PORT = 27017
 
     

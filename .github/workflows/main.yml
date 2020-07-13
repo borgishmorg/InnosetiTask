@@ -26,10 +26,14 @@ jobs:
     - name: Run test app and pytest docker image
       run: |
         docker container rm calc_test_app --force || true
-        docker run -d --name calc_test_app --network calc-test-net calc_app_test_img
+        docker run --rm -d --name calc_test_mongo --network calc-test-net mongo
+        docker run --rm -d --env TEST_CALC_APP='true' --name calc_test_app --network calc-test-net calc_app_test_img
         docker run --rm --name calc_app_pytest --network calc-test-net calc_app_pytest_img
     - name: Remove test network and old test app docker container
-      run: docker container rm --force calc_test_app
+      run: |
+        docker container rm --force calc_test_app
+        docker container rm --force calc_test_mongo
+        docker network rm --force calc-test-net
 
   deploy:
     needs: test
