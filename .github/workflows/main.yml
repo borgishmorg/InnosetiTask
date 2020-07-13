@@ -33,7 +33,7 @@ jobs:
       run: |
         docker container rm --force calc_test_app
         docker container rm --force calc_test_mongo
-        docker network rm --force calc-test-net
+        docker network rm calc-test-net
 
   deploy:
     needs: test
